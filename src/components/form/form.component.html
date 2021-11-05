@@ -1,0 +1,10 @@
+<div >
+  <app-form-item
+    *ngFor="let form of formList; index as i"
+    [amountOfForms]=amountOfForms
+    [componentIndex]=i
+    (onAddFormItem)="addForm()"
+    [updateSuccess]=updateSuccess
+  ></app-form-item>
+</div>
+

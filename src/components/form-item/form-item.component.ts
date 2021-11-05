@@ -9,10 +9,15 @@ export class FormItemComponent implements OnInit {
   @Input() amountOfForms = 0;
   @Input() componentIndex: any;
   @Input() lastIndex = 1;
+  @Input() optionsDB:any = [];
   @Input() updateSuccess: EventEmitter<any> | undefined;
   @Output() onAddFormItem: EventEmitter<any> = new EventEmitter<any>();
 
   isLast = false;
+
+  name: string = '';
+  type: string = '';
+  dataBase: string = '';
 
   constructor() { }
 
@@ -28,5 +33,7 @@ export class FormItemComponent implements OnInit {
 
   addFormLine() {
     this.onAddFormItem.emit('1');
+
+    console.log(this.name, this.type, this.dataBase);
   }
 }

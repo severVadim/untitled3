@@ -1,7 +1,11 @@
 <div>
-  <input type="text">
-  <input type="text">
-  <input type="text">
+  <select name="dataBase" [(ngModel)]="dataBase">
+    <option value="">Choose your DB</option>
+    <option *ngFor="let option of optionsDB">{{option}}</option>
+  </select>
+  <input name="name" type="text" [(ngModel)]="name">
+  <input name="type" type="text" [(ngModel)]="type">
+
   <button *ngIf="isLast" (click)="addFormLine()">+</button>
 </div>
 

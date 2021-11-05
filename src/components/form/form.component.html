@@ -1,10 +1,26 @@
-<div >
-  <app-form-item
-    *ngFor="let form of formList; index as i"
-    [amountOfForms]=amountOfForms
-    [componentIndex]=i
-    (onAddFormItem)="addForm()"
-    [updateSuccess]=updateSuccess
-  ></app-form-item>
+<div *ngIf="!isSubmitted">
+  <form #analyticForm="ngForm" novalidate>
+    <span *ngFor="let configDB of configsList.databases">
+      <input type="checkbox" id="{{configDB.guid}}" name="{{configDB.guid}}" ngModel>
+      <label for="{{configDB.guid}}">{{configDB.name}}</label>
+    </span>
+
+    <app-form-item
+      *ngFor="let form of formList; index as i"
+      [amountOfForms]=amountOfForms
+      [componentIndex]=i
+      [optionsDB]=configsList.types
+      (onAddFormItem)="addForm()"
+      [updateSuccess]=updateSuccess
+    ></app-form-item>
+
+    <button [disabled]="analyticForm.invalid"
+            class="btn btn-default" (click)="onSubmit(analyticForm)">Добавить</button>
+  </form>
 </div>
 
+<div *ngIf="isSubmitted">
+  Charts
+
+  <button (click)="backToForm()">Back</button>
+</div>

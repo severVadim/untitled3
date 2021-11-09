@@ -1,7 +1,7 @@
-import { Component, OnInit, EventEmitter, QueryList, ViewChildren} from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { FormItemComponent } from '../form-item/form-item.component';
-import { GetDataService } from '../../services/get-data.service'
+import {Component, OnInit, EventEmitter, QueryList, ViewChildren, Input, Directive} from '@angular/core';
+import {FormItemComponent} from '../form-item/form-item.component';
+import {GetDataService} from '../../services/get-data.service'
+import {NgForm} from "@angular/forms";
 
 @Component({
   selector: 'app-form',
@@ -27,6 +27,7 @@ export class FormComponent implements OnInit {
   formList = [{id: 1}];
   amountOfForms = 0;
   updateSuccess: EventEmitter<any> = new EventEmitter();
+  charts = [];
 
   constructor(public getDataService: GetDataService) { }
 
@@ -48,16 +49,38 @@ export class FormComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    let body = {};
+    let requestBody = {};
 
-    // todo needs to prepare payload
-    console.log(form);
-    console.log(this.formItems);
+    let databases: string[] = [];
+    let amount = form.controls['amount'].value;
+    Object.keys(form.controls).forEach(key => {
+      if (form.controls[key].value === true) {
+        databases.push(key)
+      }
+    });
+    let requestModels: any[] = [];
     this.formItems.forEach(item => {
       console.log(item);
+      let column = {};
+      Object.assign(column, {name: item.name});
+      Object.assign(column, {type: item.type});
+      Object.assign(column, {primaryKey: item.isPrimaryKey});
+      let valueRange = {};
+      Object.assign(valueRange, {fromValue: item.fromValue});
+      Object.assign(valueRange, {toValue: item.toValue});
+      Object.assign(valueRange, {values: item.values.split(";")});
+      let requestModel = {};
+      Object.assign(requestModel, {valueRange: valueRange});
+      Object.assign(requestModel, {column: column});
+      requestModels.push(requestModel)
     });
-
-    this.getDataService.saveConfig(body)//.then(data => {});
+    Object.assign(requestBody, {databases: databases});
+    Object.assign(requestBody, {requestModels: requestModels});
+    console.log(requestBody);
+    this.getDataService.saveConfig(amount, requestBody).subscribe((resp: any) => {
+      this.charts = resp;
+      console.log(this.charts)
+    });
     this.isSubmitted = true;
   }
 

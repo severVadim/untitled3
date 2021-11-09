@@ -1,5 +1,6 @@
 <div *ngIf="!isSubmitted">
   <form #analyticForm="ngForm" novalidate>
+    <input name="amount" type="text" placeholder="Amount of entities" ngModel>
     <span *ngFor="let configDB of configsList.databases">
       <input type="checkbox" id="{{configDB.guid}}" name="{{configDB.guid}}" ngModel>
       <label for="{{configDB.guid}}">{{configDB.name}}</label>
@@ -15,12 +16,16 @@
     ></app-form-item>
 
     <button [disabled]="analyticForm.invalid"
-            class="btn btn-default" (click)="onSubmit(analyticForm)">Добавить</button>
+            class="btn btn-default" (click)="onSubmit(analyticForm)">Добавить
+    </button>
   </form>
 </div>
 
 <div *ngIf="isSubmitted">
-  Charts
+  <app-chart
+    *ngFor="let chart of charts"
+    [chart]=chart
+  ></app-chart>
 
   <button (click)="backToForm()">Back</button>
 </div>

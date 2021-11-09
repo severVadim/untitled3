@@ -17,7 +17,11 @@ export class FormItemComponent implements OnInit {
 
   name: string = '';
   type: string = '';
-  dataBase: string = '';
+  fromValue: string = '';
+  toValue: string = '';
+  values: string = '';
+  isPrimaryKey: boolean = false;
+
 
   constructor() { }
 
@@ -33,7 +37,5 @@ export class FormItemComponent implements OnInit {
 
   addFormLine() {
     this.onAddFormItem.emit('1');
-
-    console.log(this.name, this.type, this.dataBase);
   }
 }

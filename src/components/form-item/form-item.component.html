@@ -1,11 +1,14 @@
 <div>
-  <select name="dataBase" [(ngModel)]="dataBase">
-    <option value="">Choose your DB</option>
-    <option *ngFor="let option of optionsDB">{{option}}</option>
+  <select name="type" [(ngModel)]="type">
+    <option value="">Chose column type</option>
+    <option name="type" *ngFor="let option of optionsDB">{{option}}</option>
   </select>
-  <input name="name" type="text" [(ngModel)]="name">
-  <input name="type" type="text" [(ngModel)]="type">
-
+  <input name="name" type="text" [(ngModel)]="name" placeholder="Column name">
+  <input name="valueFrom" type="text" [(ngModel)]="fromValue" placeholder="Value from for numeric">
+  <input name="valueTo" type="text" [(ngModel)]="toValue" placeholder="Value to for numeric">
+  <input name="values" type="text" [(ngModel)]="values" placeholder="List string values (use ';' as delimiter)Values to for numeric">
+  <input type="checkbox" id="primaryKey" name="primaryKey" [(ngModel)]="isPrimaryKey">
+  <label for="primaryKey">Primary key </label>
   <button *ngIf="isLast" (click)="addFormLine()">+</button>
 </div>
 

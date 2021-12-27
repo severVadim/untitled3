@@ -9,7 +9,11 @@ import {ChartType} from "angular-google-charts";
 export class ChartComponent implements OnInit {
   @Input() chart:any = {};
   title = '';
-  options = {};
+  options = {
+    vAxis: {
+      title: 'Query procession time (milliseconds)',
+    }
+  };
   type = ChartType.ColumnChart;
   data = [];
   width = 550;
